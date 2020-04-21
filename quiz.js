@@ -88,7 +88,7 @@ function setCountDownTime() {
 };
 
 function counterRender() {
-   var counterInterval = setInterval(function () {
+    var counterInterval = setInterval(function () {
         if (count <= 0) {
             clearInterval(counterInterval);
         }
@@ -101,13 +101,13 @@ function counterRender() {
 };
 
 function checkAnswer(answer) {
-    if (question[runningQuestionIndex].correct == answer) {
+    if (answer == question[runningQuestionIndex].correct) {
         score++;
         answerIsCorrect();
     }
     else {
         answerIsWrong();
-        count=count-5;
+        count = count - 5;
     }
     if (runningQuestionIndex < lastQuestionIndex) {
         count = 0;
@@ -115,7 +115,7 @@ function checkAnswer(answer) {
         questionRender();
     }
     else {
-        clearInterval(TIMER);
+        clearInterval(count);
         scoreRender();
     }
 };
@@ -128,7 +128,6 @@ function startQuiz() {
     start.style.display = "none";
     quiz.style.display = "block";
     counterRender();
-    //TIMER = setInterval(counterRender, 2000);
     progressRender();
     questionRender();
 
