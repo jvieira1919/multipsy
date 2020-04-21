@@ -50,7 +50,7 @@ var questions = [
 var lastQuestionIndex = questions.length - 1;
 var runningQuestionIndex = 0;
 
-function renderQuestion() {
+function questionRender() {
     var quest = questions[runningQuestionIndex];
     question.innerHTML = "<p>" + quest.question + "</p>";
     choiceA.innerHTML = quest.choiceA;
@@ -59,9 +59,9 @@ function renderQuestion() {
     choiceD.innerHTML = quest.choiceD;
 }
 
-start.style.display="none";
-renderQuestion();
-quiz.style.display="block";
+
+questionRender();
+
 
 function progressRender() {
     for (var qIndex = 0; qIndex <= lastQuestionIndex; qIndex++) {
@@ -79,30 +79,25 @@ function answerIsWrong() {
 
 var questionTime = 0;
 var timerWidth = 200;
-var count = 0;
+var count = 30;
 var timeBarUnit = timerWidth / questionTime;
 
+function setCountDownTime() {
+    var counterEl = document.getElementById("counter");
+    counterEl.innerHTML = count;
+};
+
 function counterRender() {
-    if (count <= questionTime) {
-        counter.innerHTML = count;
-        timeBar.style, width = timeBarUnit * count + "px";
-        count++;
-    }
-    else {
-        count = 0;
-        answerIsWrong();
-        if (runningQuestionIndex < lastQuestionIndex) {
-            runningQuestionIndex++;
-            questionRender();
+   var counterInterval = setInterval(function () {
+        if (count <= 0) {
+            clearInterval(counterInterval);
         }
         else {
-            clearInterval(TIMER);
-            scoreRender();
+            count = count - 1;
+            console.log(count);
+            setCountDownTime()
         }
-    }
-
-    var TIMER = setInterval(counterRender, 2000);
-    clearInterval(TIMER);
+    }, 1000);
 };
 
 function checkAnswer(answer) {
@@ -112,6 +107,7 @@ function checkAnswer(answer) {
     }
     else {
         answerIsWrong();
+        count=count-5;
     }
     if (runningQuestionIndex < lastQuestionIndex) {
         count = 0;
@@ -130,14 +126,15 @@ var TIMER;
 
 function startQuiz() {
     start.style.display = "none";
+    quiz.style.display = "block";
     counterRender();
-    TIMER = setInterval(counterRender, 2000);
+    //TIMER = setInterval(counterRender, 2000);
     progressRender();
     questionRender();
-    quiz.style.display= "block";
+
 };
 
-function scoreRender(){
-    scoreCon.style.display="block";
-    var scorePer= Math.round(100 * score/questions.length);
+function scoreRender() {
+    scoreCon.style.display = "block";
+    var scorePer = Math.round(100 * score / questions.length);
 }
