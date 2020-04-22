@@ -69,18 +69,11 @@ function progressRender() {
     }
 };
 
-function answerIsCorrect() {
-    document.getElementById(runningQuestionIndex).style.backgroundColor = "green";
-};
-
-function answerIsWrong() {
-    document.getElementById(runningQuestionIndex).style.backgroundColor = "red";
-};
-
 var questionTime = 0;
 var timerWidth = 200;
 var count = 30;
 var timeBarUnit = timerWidth / questionTime;
+var score = 0;
 
 function setCountDownTime() {
     var counterEl = document.getElementById("counter");
@@ -101,7 +94,9 @@ function counterRender() {
 };
 
 function checkAnswer(answer) {
-    if (answer == question[runningQuestionIndex].correct) {
+    console.log(answer);
+    console.log(questions[runningQuestionIndex].correct);
+    if (answer == questions[runningQuestionIndex].correct) {
         score++;
         answerIsCorrect();
     }
@@ -110,19 +105,26 @@ function checkAnswer(answer) {
         count = count - 5;
     }
     if (runningQuestionIndex < lastQuestionIndex) {
-        count = 0;
         runningQuestionIndex++;
         questionRender();
     }
     else {
+        console.log("gameShouldEnd");
         clearInterval(count);
+        count = 0
         scoreRender();
     }
 };
 
-start.addEventListener("click", startQuiz);
+function answerIsCorrect() {
+    document.getElementById(runningQuestionIndex).style.backgroundColor = "green";
+};
 
-var TIMER;
+function answerIsWrong() {
+    document.getElementById(runningQuestionIndex).style.backgroundColor = "red";
+};
+
+start.addEventListener("click", startQuiz);
 
 function startQuiz() {
     start.style.display = "none";
@@ -136,4 +138,6 @@ function startQuiz() {
 function scoreRender() {
     scoreCon.style.display = "block";
     var scorePer = Math.round(100 * score / questions.length);
+    scoreCon.textContent = scorePer;
+    console.log(scorePer);
 }

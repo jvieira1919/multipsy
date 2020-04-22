@@ -3,7 +3,7 @@ body{
     font-family: 'Times New Roman', Times, serif;
 };
 
-#container{
+/* #container{
     margin : 20px auto;
     background-color: white;
     height: 300px;
@@ -115,9 +115,9 @@ body{
     border-radius: 50%;
     margin-left : 5px;
     margin-right : 5px;
-};
+}; */
 
-#scoreCon{
+.score-container{
     margin : 20px auto;
     background-color: white;
     opacity: 0.8;
